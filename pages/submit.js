@@ -4,10 +4,6 @@ import Layout from '../components/Layout'
 import { getBrands, getCategories } from '../lib/sheets'
 
 const TYPES = ['圖片', '文案']
-const DEFAULT_SUBCATEGORIES = {
-  '圖片': ['尺寸／比例調整', '去背／背景移除', '背景生成', '元素提取', '風格轉換', '品牌化', '其他圖片'],
-  '文案': ['廣告文案', '社群貼文', '公告／通知', '產品描述', '活動文案', '其他文案'],
-}
 
 export default function SubmitPage({ brands, categories }) {
   const [tab, setTab] = useState('manual') // 'manual' | 'url'
@@ -28,7 +24,9 @@ export default function SubmitPage({ brands, categories }) {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
 
-  const subcategories = form.type ? (DEFAULT_SUBCATEGORIES[form.type] || []) : []
+  const subcategories = form.type
+    ? categories.filter(c => c.type === form.type).map(c => c.subcategory)
+    : []
 
   const update = (key, val) => setForm(f => ({ ...f, [key]: val }))
 
