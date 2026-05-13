@@ -3,7 +3,8 @@ import { getPendingPrompts } from '../../lib/sheets'
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end()
   const { password } = req.query
-  if (password !== process.env.ADMIN_PASSWORD) {
+  const adminPw = process.env.ADMIN_PASSWORD?.replace(/^﻿/, '').trim()
+  if (password !== adminPw) {
     return res.status(401).json({ error: '密碼錯誤' })
   }
   try {
