@@ -3,7 +3,7 @@ import { autoClassify, detectVariables } from '../../lib/categorizer'
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
   const { url } = req.body
-  if (!url || !url.includes('threads.net')) {
+  if (!url || (!url.includes('threads.net') && !url.includes('threads.com'))) {
     return res.status(400).json({ error: '請提供有效的 Threads 網址' })
   }
 
